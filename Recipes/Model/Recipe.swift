@@ -14,12 +14,16 @@ public class Recipe: NSManagedObject, Identifiable
     @NSManaged public var uuid: UUID
     @NSManaged public var created: Date
     @NSManaged public var name: String
+    @NSManaged public var ingredients: String
+    @NSManaged public var instructions: String
 
     public override func awakeFromInsert()
     {
         setPrimitiveValue(UUID(), forKey: "uuid")
         setPrimitiveValue(Date(), forKey: "created")
         setPrimitiveValue("",     forKey: "name")
+        setPrimitiveValue("", forKey: "ingredients")
+        setPrimitiveValue("", forKey: "instructions")
     }
     
 
