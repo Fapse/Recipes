@@ -12,9 +12,27 @@ struct RecipeDetail: View {
 	@ObservedObject var recipe: Recipe
     var body: some View {
 		VStack(alignment: .leading, spacing: 5.0) {
-			Text(recipe.name)
-				.font(.title)
-				.fontWeight(.bold)
+			Group {
+				Text(recipe.name)
+					.font(.title)
+					.fontWeight(.bold)
+					.frame(maxWidth: .infinity, alignment: .center)
+				if !recipe.ingredients.isEmpty {
+					Text("Zutaten")
+						.font(.subheadline)
+						.fontWeight(.bold)
+					Text(recipe.ingredients)
+						.font(.system(size: 16))
+				}
+				if !recipe.instructions.isEmpty {
+					Text("Zubereitung")
+						.font(.subheadline)
+						.fontWeight(.bold)
+					Text(recipe.instructions)
+						.font(.system(size: 16))
+				}
+				Spacer() //Pushes above views to top
+			}
 		}
 		.padding()
 		.navigationBarTitle(Text("Detail"), displayMode: .inline)
