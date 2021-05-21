@@ -17,7 +17,7 @@ struct RecipeDetail: View {
 				.fontWeight(.bold)
 		}
 		.padding()
-		.navigationBarTitle(Text("Details"), displayMode: .inline)
+		.navigationBarTitle(Text("Detail"), displayMode: .inline)
 		.toolbar {
 			Button("Edit") {
 				showingEdit = true
