@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 @main
-struct CoreDataDemoApp: App {
+struct RecipesApp: App {
 	let persistenceController = PersistenceController.preview
     var body: some Scene {
         WindowGroup {
@@ -19,7 +19,7 @@ struct CoreDataDemoApp: App {
     }
 }
 
-struct CoreDataDemoApp_Previews: PreviewProvider {
+struct RecipesApp_Previews: PreviewProvider {
 	static var previews: some View {
 		RecipeList()
 			.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

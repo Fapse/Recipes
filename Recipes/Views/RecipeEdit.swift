@@ -24,7 +24,7 @@ struct RecipeEdit: View {
 		_ingredients = State(initialValue: recipe.ingredients)
 		_instructions = State(initialValue: recipe.instructions)
 	}
-
+	
     var body: some View {
         NavigationView {
 			Form {

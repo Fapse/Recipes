@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct RecipeList: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
@@ -32,22 +33,32 @@ struct RecipeList: View {
 			.navigationTitle("Rezepte")
 			.toolbar {
 				Button(action: makeRecipe) {
-					Label("Add Recipe", systemImage: "person.crop.circle.badge.plus")
+					Label("Add Recipe", systemImage: "rectangle.stack.fill.badge.plus")
 				}
 			}
 		}
-		.sheet(isPresented: $showingNew) {
+		.sheet(isPresented: $showingNew, onDismiss: deleteEmptyRecipes) {
 			RecipeEdit(recipe: recipes.sorted(by: { $1.created < $0.created }).first!)
 		}
     }
-    
+        
 	func makeRecipe() {
 		let recipe = Recipe(context: managedObjectContext)
 		recipe.uuid = UUID()
+		recipe.created = Date()
 		
 		showingNew = true
 	}
-    
+	
+	func deleteEmptyRecipes() {
+		for recipe in recipes {
+			if recipe.name.isEmpty {
+				managedObjectContext.delete(recipe)
+			}
+		}
+		try? managedObjectContext.save()
+	}
+	
     func deleteRecipes(at offsets: IndexSet) {
 		for offset in offsets {
 			managedObjectContext.delete(recipes[offset])

@@ -11,7 +11,8 @@ import CoreData
 @objc(Recipe)
 public class Recipe: NSManagedObject, Identifiable
 {
-    @NSManaged public var uuid: UUID
+    @NSManaged public var uuid: UUID!	// must be force-unwrapped (probably bug in CoreData, with optional values)
+										// see bug report here https://bugs.swift.org/browse/SR-6143
     @NSManaged public var created: Date
     @NSManaged public var name: String
     @NSManaged public var ingredients: String

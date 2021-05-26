@@ -14,8 +14,7 @@ struct RecipeRow: View {
 			Text(recipe.name)
 				.font(.headline)
 				.padding([.leading, .trailing], 5)
-		}
-		
+		}		
     }
 }
 
