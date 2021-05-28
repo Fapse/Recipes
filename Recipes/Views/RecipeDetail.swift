@@ -12,35 +12,35 @@ struct RecipeDetail: View {
 	@ObservedObject var recipe: Recipe
     var body: some View {
 		VStack(alignment: .leading, spacing: 5.0) {
-		ScrollView {
-			Group {
-				Image("fisch")
-					.resizable()
-					.scaledToFill()
-				Text(recipe.name)
-					.font(.title)
-					.fontWeight(.bold)
-					.frame(maxWidth: .infinity, alignment: .center)
+			ScrollView {
 				Group {
-					if !recipe.ingredients.isEmpty {
+					Image("fisch")
+						.resizable()
+						.scaledToFill()
+					Text(recipe.name)
+						.font(.title)
+						.fontWeight(.bold)
+						.frame(maxWidth: .infinity, alignment: .center)
+					Group {
+						if !recipe.ingredients.isEmpty {
 							Text("Zutaten")
 								.font(.subheadline)
 								.fontWeight(.bold)
 							Text(recipe.ingredients)
 								.font(.system(size: 16))
+						}
+						if !recipe.instructions.isEmpty {
+							Text("Zubereitung")
+								.font(.subheadline)
+								.fontWeight(.bold)
+							Text(recipe.instructions)
+								.font(.system(size: 16))
+						}
 					}
-					if !recipe.instructions.isEmpty {
-						Text("Zubereitung")
-							.font(.subheadline)
-							.fontWeight(.bold)
-						Text(recipe.instructions)
-							.font(.system(size: 16))
-					}
+					.frame(maxWidth: .infinity, alignment: .leading)
+					Spacer() //Pushes above views to top
 				}
-				.frame(maxWidth: .infinity, alignment: .leading)
-				Spacer() //Pushes above views to top
 			}
-		}
 		}
 		.padding()
 		.navigationBarTitle(Text("Detail"), displayMode: .inline)
