@@ -14,7 +14,7 @@ class PersistenceController {
 
 	static var preview: PersistenceController = {
 		let controller = PersistenceController(inMemory: true)
-		let recipeNames = ["Apfelstrudel", "Kaiserschmarrn", "Käsespatzen"]
+		let recipeNames = ["Kuchen", "Quinoasalat", "Pommes", "Fisch", "Kartoffelsalat"]
 		let ingredients = "100 ml Milch\n2 Eier\n400 g Mehl"
 		let instructions = "Alles zusammenrühren. Danach in einer Pfanne erhitzen und mit reichlich Weißwein ablöschen.\nAnschließend verspeisen."
 		
