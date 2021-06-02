@@ -14,7 +14,7 @@ struct RecipeDetail: View {
 		VStack(alignment: .leading, spacing: 5.0) {
 			ScrollView {
 				Group {
-					Image("fisch")
+					Image("pommes")
 						.resizable()
 						.scaledToFill()
 					Text(recipe.name)
@@ -45,12 +45,11 @@ struct RecipeDetail: View {
 		.padding()
 		.navigationBarTitle(Text("Detail"), displayMode: .inline)
 		.toolbar {
-			Button("Edit") {
-				showingEdit = true
+			NavigationLink(destination: RecipeEdit(recipe: recipe), isActive: $showingEdit) {
+				Button("Edit") {
+					showingEdit = true
+				}
 			}
-		}
-		.sheet(isPresented: $showingEdit) {
-			RecipeEdit(recipe: recipe)
 		}
 	}
 }

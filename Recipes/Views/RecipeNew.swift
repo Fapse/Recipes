@@ -1,30 +1,20 @@
 //
-//  RecipeEdit.swift
-//  CoreDataDemo
+//  RecipeNew.swift
+//  Recipes
 //
-//  Created by Fabian Braig on 20.05.21.
+//  Created by Fabian Braig on 02.06.21.
 //
 
 import SwiftUI
 
-struct RecipeEdit: View {
+struct RecipeNew: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
 	@Environment(\.presentationMode) var presentationMode
 
-	var recipe: Recipe
-	
 	@State private var name: String = ""
 	@State private var ingredients: String = ""
 	@State private var instructions: String = ""
-	
-	init(recipe: Recipe) {
-		self.recipe = recipe
-		
-		_name = State(initialValue: recipe.name)
-		_ingredients = State(initialValue: recipe.ingredients)
-		_instructions = State(initialValue: recipe.instructions)
-	}
-	
+
     var body: some View {
         NavigationView {
 			Form {
@@ -41,12 +31,15 @@ struct RecipeEdit: View {
 						.frame(height: 150)
 				}
 			}
-			.navigationBarTitle(Text("Rezept bearbeiten"), displayMode: .inline)
+			.navigationBarTitle(Text("Rezept anlegen"), displayMode: .inline)
 			.onDisappear() {
-				if !recipe.name.isEmpty {
+				if !name.isEmpty {
+					let recipe = Recipe(context: managedObjectContext)
 					recipe.name = name
 					recipe.ingredients = ingredients
 					recipe.instructions = instructions
+					recipe.uuid = UUID()
+					recipe.created = Date()
 					try? managedObjectContext.save()
 				}
 				presentationMode.wrappedValue.dismiss()
@@ -55,8 +48,8 @@ struct RecipeEdit: View {
     }
 }
 
-struct RecipeEdit_Previews: PreviewProvider {
+struct RecipeNew_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeEdit(recipe: previewRecipe)
+        RecipeNew()
     }
 }
