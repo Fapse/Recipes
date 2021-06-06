@@ -46,8 +46,10 @@ struct RecipeDetail: View {
 		.navigationBarTitle(Text("Detail"), displayMode: .inline)
 		.toolbar {
 			NavigationLink(destination: RecipeEdit(recipe: recipe), isActive: $showingEdit) {
-				Button("Edit") {
+				Button(action: {
 					showingEdit = true
+				}) {
+					Image(systemName: "pencil")
 				}
 			}
 		}

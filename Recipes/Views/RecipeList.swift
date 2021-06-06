@@ -34,8 +34,10 @@ struct RecipeList: View {
 			.toolbar {
 				VStack {
 					NavigationLink(destination: RecipeNew(), isActive: $showingNew) {}
-					Button("New") {
-							showingNew = true
+					Button(action: {
+						showingNew = true
+					}) {
+						Image(systemName: "note.text.badge.plus")
 					}
 				}
 			}
