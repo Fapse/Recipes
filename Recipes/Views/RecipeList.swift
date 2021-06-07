@@ -31,6 +31,7 @@ struct RecipeList: View {
 				.onDelete(perform: deleteRecipes)
 			}
 			.navigationTitle("Rezepte")
+			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				VStack {
 					NavigationLink(destination: RecipeNew(), isActive: $showingNew) {}
