@@ -10,42 +10,71 @@ import SwiftUI
 struct RecipeNew: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
 	@Environment(\.presentationMode) var presentationMode
+	
+	@State private var showingImagePicker = false
+	@State private var inputImage: UIImage?
 
+	@State private var image: Image?
 	@State private var name: String = ""
 	@State private var ingredients: String = ""
 	@State private var instructions: String = ""
 
     var body: some View {
         NavigationView {
-			Form {
-				Section(header: Text("Rezeptname")) {
-					TextField("Name", text: $name)
+			VStack {
+				ZStack{
+					Rectangle()
+						.fill(Color.secondary)
+						if image != nil {
+							image?
+								.resizable()
+								.scaledToFit()
+						} else {
+							Text("Tap to select a picture")
+								.foregroundColor(.white)
+								.font(.headline)
+						}
 				}
-				Section(header: Text("Zutaten")) {
-					TextEditor(text: $ingredients)
-						.frame(height: 150)
-					
+				.onTapGesture {
+					self.showingImagePicker = true
 				}
-				Section(header: Text("Kochanleitung")) {
-					TextEditor(text: $instructions)
-						.frame(height: 150)
+				Form {
+					Section(header: Text("Rezeptname")) {
+						TextField("Name", text: $name)
+					}
+					Section(header: Text("Zutaten")) {
+						TextEditor(text: $ingredients)
+							.frame(height: 150)
+						
+					}
+					Section(header: Text("Kochanleitung")) {
+						TextEditor(text: $instructions)
+							.frame(height: 150)
+					}
 				}
-			}
-			.navigationBarTitle(Text("Rezept anlegen"), displayMode: .inline)
-			.onDisappear() {
-				if !name.isEmpty {
-					let recipe = Recipe(context: managedObjectContext)
-					recipe.name = name
-					recipe.ingredients = ingredients
-					recipe.instructions = instructions
-					recipe.uuid = UUID()
-					recipe.created = Date()
-					try? managedObjectContext.save()
+				.navigationBarTitle(Text("Rezept anlegen"), displayMode: .inline)
+				.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+					ImagePicker(image: self.$inputImage)
 				}
-				presentationMode.wrappedValue.dismiss()
+				.onDisappear() {
+					if !name.isEmpty {
+						let recipe = Recipe(context: managedObjectContext)
+						recipe.name = name
+						recipe.ingredients = ingredients
+						recipe.instructions = instructions
+						recipe.uuid = UUID()
+						recipe.created = Date()
+						try? managedObjectContext.save()
+					}
+					presentationMode.wrappedValue.dismiss()
+				}
 			}
 		}
     }
+    func loadImage() {
+		guard let inputImage = inputImage else {return}
+		image = Image(uiImage: inputImage)
+	}
 }
 
 struct RecipeNew_Previews: PreviewProvider {
