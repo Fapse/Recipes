@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F7C39B326679453005304D1 /* RecipeNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7C39B226679453005304D1 /* RecipeNew.swift */; };
+		1F7C39B5267000E0005304D1 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7C39B4267000E0005304D1 /* ImagePicker.swift */; };
 		1FE465CD2657BE4700EF0003 /* RecipesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE465CC2657BE4700EF0003 /* RecipesApp.swift */; };
 		1FE465D12657BE4800EF0003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FE465D02657BE4800EF0003 /* Assets.xcassets */; };
 		1FE465D42657BE4800EF0003 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FE465D32657BE4800EF0003 /* Preview Assets.xcassets */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		1F7C39B226679453005304D1 /* RecipeNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeNew.swift; sourceTree = "<group>"; };
+		1F7C39B4267000E0005304D1 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		1FE465C92657BE4700EF0003 /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE465CC2657BE4700EF0003 /* RecipesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesApp.swift; sourceTree = "<group>"; };
 		1FE465D02657BE4800EF0003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				1FE465E92657C0D800EF0003 /* RecipeDetail.swift */,
 				1FE465EB2657C0DF00EF0003 /* RecipeEdit.swift */,
 				1F7C39B226679453005304D1 /* RecipeNew.swift */,
+				1F7C39B4267000E0005304D1 /* ImagePicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				1FE465DD2657BF0F00EF0003 /* Recipes.xcdatamodeld in Sources */,
 				1FE465DF2657BFBE00EF0003 /* PersistenceController.swift in Sources */,
 				1F7C39B326679453005304D1 /* RecipeNew.swift in Sources */,
+				1F7C39B5267000E0005304D1 /* ImagePicker.swift in Sources */,
 				1FE465E32657C04300EF0003 /* Recipe.swift in Sources */,
 				1FE465E82657C0D200EF0003 /* RecipeRow.swift in Sources */,
 			);
