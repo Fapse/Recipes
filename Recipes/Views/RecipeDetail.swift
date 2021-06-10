@@ -14,9 +14,12 @@ struct RecipeDetail: View {
 		VStack(alignment: .leading, spacing: 5.0) {
 			ScrollView {
 				Group {
-					Image("pommes")
-						.resizable()
-						.scaledToFill()
+					if (recipe.image != nil) {
+						Image(uiImage: UIImage(data: recipe.image!)!)
+							.resizable()
+							.scaledToFill()
+					}
+					//Image("pommes")
 					Text(recipe.name)
 						.font(.title)
 						.fontWeight(.bold)

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 @objc(Recipe)
 public class Recipe: NSManagedObject, Identifiable
@@ -17,6 +18,7 @@ public class Recipe: NSManagedObject, Identifiable
     @NSManaged public var name: String
     @NSManaged public var ingredients: String
     @NSManaged public var instructions: String
+    @NSManaged public var image: Data?
 
     public override func awakeFromInsert()
     {
@@ -25,6 +27,7 @@ public class Recipe: NSManagedObject, Identifiable
         setPrimitiveValue("",     forKey: "name")
         setPrimitiveValue("", forKey: "ingredients")
         setPrimitiveValue("", forKey: "instructions")
+        //setPrimitiveValue(UIImage(named: "pommes", in: nil, compatibleWith: nil)?.pngData, forKey: "image")
     }
     
 

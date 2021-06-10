@@ -62,6 +62,7 @@ struct RecipeNew: View {
 						recipe.name = name
 						recipe.ingredients = ingredients
 						recipe.instructions = instructions
+						recipe.image = inputImage?.pngData()
 						recipe.uuid = UUID()
 						recipe.created = Date()
 						try? managedObjectContext.save()

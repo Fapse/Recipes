@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 class PersistenceController {
 	static let shared = PersistenceController()
@@ -17,12 +18,15 @@ class PersistenceController {
 		let recipeNames = ["Kuchen", "Quinoasalat", "Pommes", "Fisch", "Kartoffelsalat"]
 		let ingredients = "100 ml Milch\n2 Eier\n400 g Mehl"
 		let instructions = "Alles zusammenrühren. Danach in einer Pfanne erhitzen und mit reichlich Weißwein ablöschen.\nAnschließend verspeisen."
+		let test = UIImage(named: "kuchen", in: nil, compatibleWith: nil)
+		let testData = test?.pngData()
 		
 		for count in 0..<recipeNames.count {
 			let recipe = Recipe(context: controller.container.viewContext)
 			recipe.name = recipeNames[count]
 			recipe.instructions = instructions
 			recipe.ingredients = ingredients
+			recipe.image = testData
 			recipe.created = Date()
 			recipe.uuid = UUID()
 		}
