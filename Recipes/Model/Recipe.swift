@@ -27,12 +27,9 @@ public class Recipe: NSManagedObject, Identifiable
         setPrimitiveValue("",     forKey: "name")
         setPrimitiveValue("", forKey: "ingredients")
         setPrimitiveValue("", forKey: "instructions")
-        //setPrimitiveValue(UIImage(named: "pommes", in: nil, compatibleWith: nil)?.pngData, forKey: "image")
     }
-    
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Recipe> {
         return NSFetchRequest<Recipe>(entityName: "Recipe")
     }
-    
 }

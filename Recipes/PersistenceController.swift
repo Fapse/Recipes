@@ -18,8 +18,8 @@ class PersistenceController {
 		let recipeNames = ["Kuchen", "Quinoasalat", "Pommes", "Fisch", "Kartoffelsalat"]
 		let ingredients = "100 ml Milch\n2 Eier\n400 g Mehl"
 		let instructions = "Alles zusammenrühren. Danach in einer Pfanne erhitzen und mit reichlich Weißwein ablöschen.\nAnschließend verspeisen."
-		let test = UIImage(named: "kuchen", in: nil, compatibleWith: nil)
-		let testData = test?.pngData()
+		let testImage = UIImage(named: "pommes", in: nil, compatibleWith: nil)
+		let testData = testImage?.pngData()
 		
 		for count in 0..<recipeNames.count {
 			let recipe = Recipe(context: controller.container.viewContext)
@@ -54,9 +54,12 @@ class PersistenceController {
 #if DEBUG
 var previewRecipe: Recipe = {
 	let recipe = Recipe(context: PersistenceController.preview.container.viewContext)
+	let testImage = UIImage(named: "pommes", in: nil, compatibleWith: nil)
+	let testData = testImage?.pngData()
 	recipe.name = "Käsespatzen"
 	recipe.ingredients = "100 ml Milch\n2 Eier\n400 g Mehl"
 	recipe.instructions = "Alles zusammenrühren. Danach in einer Pfanne erhitzen und mit reichlich Weißwein ablöschen.\nAnschließend verspeisen."
+	recipe.image = testData
 	recipe.created = Date()
 	recipe.uuid = UUID()
 	return recipe
