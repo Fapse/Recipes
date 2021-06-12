@@ -33,11 +33,12 @@ struct RecipeEdit: View {
 	}
 	
     var body: some View {
-        NavigationView {
+		ScrollView {
 			VStack {
 				ZStack{
 					Rectangle()
 						.fill(Color.secondary)
+						.frame(minHeight: 100)
 					if image != nil {
 						image?
 							.resizable()
@@ -54,37 +55,37 @@ struct RecipeEdit: View {
 				.onTapGesture {
 					self.showingImagePicker = true
 				}
-					
-				Form {
-					Section(header: Text("Rezeptname")) {
-						TextField("Name", text: $name)
-					}
-					Section(header: Text("Zutaten")) {
-						TextEditor(text: $ingredients)
-							.frame(height: 150)
-					}
-					Section(header: Text("Kochanleitung")) {
-						TextEditor(text: $instructions)
-							.frame(height: 150)
-					}
-				}
-				.navigationBarTitle(Text("Rezept bearbeiten"), displayMode: .inline)
-				.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
-					ImagePicker(image: self.$inputImage)
-				}
-				.onDisappear() {
-					if !recipe.name.isEmpty {
-						recipe.name = name
-						recipe.ingredients = ingredients
-						recipe.instructions = instructions
-						if (inputImage != nil) {
-							recipe.image = inputImage?.pngData()
-						}
-						try? managedObjectContext.save()
-					}
-					presentationMode.wrappedValue.dismiss()
-				}
+				Text("Rezeptname")
+					.bold()
+				TextField("Name", text: $name)
+					.background(Color.white)
+				Text("Zutaten")
+					.bold()
+				TextEditor(text: $ingredients)
+					.frame(height: 120)
+				Text("Kochanleitung")
+					.bold()
+				TextEditor(text: $instructions)
+					.frame(height: 120)
 			}
+		}
+		.padding()
+		.background(Color.gray.opacity(0.2))
+		.navigationBarTitle(Text("Rezept bearbeiten"), displayMode: .inline)
+		.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+			ImagePicker(image: self.$inputImage)
+		}
+		.onDisappear() {
+			if !recipe.name.isEmpty {
+				recipe.name = name
+				recipe.ingredients = ingredients
+				recipe.instructions = instructions
+				if (inputImage != nil) {
+					recipe.image = inputImage?.pngData()
+				}
+				try? managedObjectContext.save()
+			}
+			presentationMode.wrappedValue.dismiss()
 		}
     }
     
