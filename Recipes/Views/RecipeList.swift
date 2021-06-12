@@ -34,7 +34,7 @@ struct RecipeList: View {
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				VStack {
-					NavigationLink(destination: RecipeNew(), isActive: $showingNew) {}
+					NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
 					Button(action: {
 						showingNew = true
 					}) {

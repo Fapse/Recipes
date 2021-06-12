@@ -14,12 +14,16 @@ struct RecipeEdit: View {
 	@State private var showingImagePicker = false
 	@State private var inputImage: UIImage?
 
-	var recipe: Recipe
+	var recipe: Recipe?
 
 	@State private var image: Image?
 	@State private var name: String = ""
 	@State private var ingredients: String = ""
 	@State private var instructions: String = ""
+	
+	init() {
+	
+	}
 	
 	init(recipe: Recipe) {
 		self.recipe = recipe
@@ -76,14 +80,25 @@ struct RecipeEdit: View {
 			ImagePicker(image: self.$inputImage)
 		}
 		.onDisappear() {
-			if !recipe.name.isEmpty {
-				recipe.name = name
-				recipe.ingredients = ingredients
-				recipe.instructions = instructions
-				if (inputImage != nil) {
-					recipe.image = inputImage?.pngData()
+			if name != "" {
+				if recipe == nil {
+					let recipe_temp = Recipe(context: managedObjectContext)
+					recipe_temp.name = name
+					recipe_temp.ingredients = ingredients
+					recipe_temp.instructions = instructions
+					if (inputImage != nil) {
+						recipe_temp.image = inputImage?.pngData()
+					}
+					try? managedObjectContext.save()
+				} else {
+					recipe!.name = name
+					recipe!.ingredients = ingredients
+					recipe!.instructions = instructions
+					if (inputImage != nil) {
+						recipe!.image = inputImage?.pngData()
+					}
+					try? managedObjectContext.save()
 				}
-				try? managedObjectContext.save()
 			}
 			presentationMode.wrappedValue.dismiss()
 		}
