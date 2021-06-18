@@ -11,6 +11,7 @@ import CoreData
 struct RecipeList: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
 	@State private var showingNew = false
+	@State private var showingSettings = false
 
 	@FetchRequest(
 		entity: Recipe.entity(),
@@ -30,18 +31,31 @@ struct RecipeList: View {
 				}
 				.onDelete(perform: deleteRecipes)
 			}
+			.listStyle(PlainListStyle())
 			.navigationTitle("Rezepte")
 			.navigationBarTitleDisplayMode(.inline)
-			.toolbar {
-				VStack {
-					NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
-					Button(action: {
-						showingNew = true
-					}) {
-						Image(systemName: "note.text.badge.plus")
+			.navigationBarItems(
+				leading:
+					HStack {
+						NavigationLink(destination: Settings(), isActive: $showingSettings) {}
+						Button(action: {
+							showingSettings = true
+						}) {
+							Image(systemName: "gearshape")
+						}
+						.padding()
+					},
+				trailing:
+					HStack {
+						NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
+						Button(action: {
+							showingNew = true
+						}) {
+							Image(systemName: "note.text.badge.plus")
+						}
+						.padding()
 					}
-				}
-			}
+			)
 		}
 	}
         
