@@ -62,7 +62,6 @@ struct RecipeEdit: View {
 				Text("Rezeptname")
 					.bold()
 				TextField("Name", text: $name)
-					.background(Color.white)
 				Text("Zutaten")
 					.bold()
 				TextEditor(text: $ingredients)
@@ -87,7 +86,7 @@ struct RecipeEdit: View {
 					recipe_temp.ingredients = ingredients
 					recipe_temp.instructions = instructions
 					if (inputImage != nil) {
-						recipe_temp.image = inputImage?.pngData()
+						recipe_temp.image = inputImage?.jpegData(compressionQuality: 1)
 					}
 					try? managedObjectContext.save()
 				} else {
@@ -95,7 +94,7 @@ struct RecipeEdit: View {
 					recipe!.ingredients = ingredients
 					recipe!.instructions = instructions
 					if (inputImage != nil) {
-						recipe!.image = inputImage?.pngData()
+						recipe!.image = inputImage?.jpegData(compressionQuality: 1)
 					}
 					try? managedObjectContext.save()
 				}
