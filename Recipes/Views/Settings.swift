@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct Settings: View {
 
@@ -15,15 +16,23 @@ struct Settings: View {
 		entity: Recipe.entity(),
 		sortDescriptors: [NSSortDescriptor(keyPath: \Recipe.name, ascending: true)]
 	) var recipes: FetchedResults<Recipe>
-
-
+	
+	@State private var showingAlert = false
+	
     var body: some View {
 		VStack {
-		Group {
-			Button("Load Recipes From File", action: loadRecipesFromFile)
-			Button("Load Default Recipes", action: loadDefaultRecipes)
-			Button("Export Recipes To File", action: exportRecipesToFile)
-			Button("Delete Recipe Database", action: deleteRecipeDatabase)
+			Group {
+				Text("Anzahl der Rezepte: \(recipes.count)")
+				Button("Load Recipes From File", action: loadRecipesFromFile)
+				Button("Export Recipes To File", action: exportRecipesToFile)
+					.disabled(recipes.count == 0)
+				Button("Delete Recipe Database") {
+					showingAlert = true
+				}
+				.alert(isPresented: $showingAlert) {
+					Alert(title: Text("Achtung"), message: Text("Alles Rezepte löschen?"), primaryButton: .default(Text("Abbrechen")), secondaryButton: .destructive(Text("Löschen"), action: deleteRecipeDatabase))
+				}
+				.disabled(recipes.count == 0)
 			}
 			.padding()
 		}
@@ -34,12 +43,7 @@ struct Settings: View {
 		print("Testi")
 	}
 	
-    func loadDefaultRecipes(){
-    
-	}
-
 	func exportRecipesToFile() {
-
 		if recipes.count > 0 {
 			var json = "{\n"
 			for i in 0...recipes.count - 1 {
@@ -59,7 +63,17 @@ struct Settings: View {
 	}
     
     func deleteRecipeDatabase(){
-    
+		guard recipes.count > 0 else {
+			return
+		}
+		do {
+			for recipe in recipes {
+				managedObjectContext.delete(recipe)
+			}
+			try managedObjectContext.save()
+		} catch let error {
+			print(error.localizedDescription)
+		}
 	}
 	
 	func writeToFile(_ fileContent: String) {
@@ -68,7 +82,7 @@ struct Settings: View {
 			print(path.absoluteString)
 			print("... attempting to write")
 			try fileContent.write(to: path, atomically: true, encoding: .utf8)
-			print("... file writtem")
+			print("... file written")
 		} catch {
 			print(error.localizedDescription)
 		}
