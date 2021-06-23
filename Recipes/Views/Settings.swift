@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import UIKit
+import Foundation
 
 struct Settings: View {
 
@@ -40,24 +40,59 @@ struct Settings: View {
     }
     
     func loadRecipesFromFile(){
-		print("Testi")
+		let data = readFromFile()
+		guard data != nil else {
+			return
+		}
+		do {
+			let json = try JSONSerialization.jsonObject(with: data!, options: [])
+			if let root = json as? [[String: String]] {
+				for recipe in root {
+					if let recipe_name = recipe["name"] {
+						if recipe_name != "" {
+							if !recipeNameExists(recipe_name) {
+								let recipe_temp = Recipe(context: managedObjectContext)
+								recipe_temp.name = recipe_name
+								recipe_temp.ingredients = recipe["ingredients"] ?? ""
+								recipe_temp.instructions = recipe["instructions"] ?? ""
+								//if (inputImage != nil) {
+								//	recipe_temp.image = inputImage?.jpegData(compressionQuality: 1)
+								//}
+								try? managedObjectContext.save()
+							}
+						}
+					}
+				}
+			}
+		} catch {
+			print("Error in loadRecipesFromFile")
+			print(error)
+		}
+	}
+	
+	func recipeNameExists(_ newRecipeName: String) -> Bool {
+		for recipe in recipes {
+			if (recipe.name == newRecipeName) {
+				return true
+			}
+		}
+		return false
 	}
 	
 	func exportRecipesToFile() {
 		if recipes.count > 0 {
-			var json = "{\n"
+			var json = "["
 			for i in 0...recipes.count - 1 {
-				json.append("\t[\n")
-				json.append("\t\t\"name\": \"\(recipes[i].name)\",\n")
-				json.append("\t\t\"ingredients\": \"\(recipes[i].ingredients)\",\n")
-				json.append("\t\t\"instructions\": \"\(recipes[i].instructions)\"\n")
-				json.append("\t]")
+				json.append("{")
+				json.append("\"name\":\"\(recipes[i].name)\",")
+				json.append("\"ingredients\":\"\(recipes[i].ingredients)\",")
+				json.append("\"instructions\":\"\(recipes[i].instructions)\"")
+				json.append("}")
 				if !(i == recipes.count - 1) {
-					json.append(",\n")
+					json.append(",")
 				}
 			}
-			json.append("\n}")
-			print(json)
+			json.append("]")
 			writeToFile(json)
 		}
 	}
@@ -77,15 +112,24 @@ struct Settings: View {
 	}
 	
 	func writeToFile(_ fileContent: String) {
-		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent("recipes.txt")
+		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent("recipes.json")
 		do {
-			print(path.absoluteString)
-			print("... attempting to write")
 			try fileContent.write(to: path, atomically: true, encoding: .utf8)
-			print("... file written")
 		} catch {
 			print(error.localizedDescription)
 		}
+	}
+	
+	func readFromFile() -> Data? {
+		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent("recipes.json")
+		var data: Data?
+		do {
+			data = try Data(contentsOf: path)
+		} catch {
+			print("Error reading from file")
+			print(error.localizedDescription)
+		}
+		return data
 	}
 }
 
