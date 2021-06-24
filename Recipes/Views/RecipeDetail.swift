@@ -21,12 +21,14 @@ struct RecipeDetail: View {
 				Text(recipe.name)
 					.font(.title)
 					.fontWeight(.bold)
+					.padding(.top)
 					.frame(maxWidth: .infinity, alignment: .center)
 				Group {
 					if !recipe.ingredients.isEmpty {
 						Text("Zutaten")
 							.font(.subheadline)
 							.fontWeight(.bold)
+							.padding(.top)
 						Text(recipe.ingredients)
 							.font(.system(size: 16))
 					}
@@ -34,11 +36,18 @@ struct RecipeDetail: View {
 						Text("Zubereitung")
 							.font(.subheadline)
 							.fontWeight(.bold)
+							.padding(.top)
 						Text(recipe.instructions)
 							.font(.system(size: 16))
 					}
 				}
 				.frame(maxWidth: .infinity, alignment: .leading)
+				Text("Erstellt: " + getDateString(date: recipe.created))
+					.font(.footnote)
+					.foregroundColor(.gray)
+					.italic()
+					.padding(.top)
+					.frame(alignment: .center)
 			}
 		}
 		.padding()
@@ -52,6 +61,14 @@ struct RecipeDetail: View {
 				}
 			}
 		}
+	}
+	
+	func getDateString(date: Date) -> String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateStyle = .medium
+		dateFormatter.timeStyle = .short
+		dateFormatter.locale = Locale(identifier: "de_DE")
+		return dateFormatter.string(from: date)
 	}
 }
 
