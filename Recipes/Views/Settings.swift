@@ -55,6 +55,11 @@ struct Settings: View {
 								recipe_temp.name = recipe_name
 								recipe_temp.ingredients = recipe["ingredients"] ?? ""
 								recipe_temp.instructions = recipe["instructions"] ?? ""
+								if let temp_created = recipe["created"] {
+									if let temp_date = Double(temp_created) {
+										recipe_temp.created = Date(timeIntervalSince1970: temp_date)
+									}
+								}
 								//if (inputImage != nil) {
 								//	recipe_temp.image = inputImage?.jpegData(compressionQuality: 1)
 								//}
@@ -86,7 +91,8 @@ struct Settings: View {
 				json.append("{")
 				json.append("\"name\":\"\(recipes[i].name)\",")
 				json.append("\"ingredients\":\"\(recipes[i].ingredients)\",")
-				json.append("\"instructions\":\"\(recipes[i].instructions)\"")
+				json.append("\"instructions\":\"\(recipes[i].instructions)\",")
+				json.append("\"created\":\"\(recipes[i].created.timeIntervalSince1970)\"")
 				json.append("}")
 				if !(i == recipes.count - 1) {
 					json.append(",")
