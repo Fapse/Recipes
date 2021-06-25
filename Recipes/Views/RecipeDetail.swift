@@ -16,7 +16,8 @@ struct RecipeDetail: View {
 				if (recipe.image != nil) {
 					Image(uiImage: UIImage(data: recipe.image!)!)
 						.resizable()
-						.scaledToFill()
+						.aspectRatio(contentMode: .fit)
+						.frame(maxHeight: 250)
 				}
 				Text(recipe.name)
 					.font(.title)
