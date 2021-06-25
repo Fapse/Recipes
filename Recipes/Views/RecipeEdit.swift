@@ -47,14 +47,10 @@ struct RecipeEdit: View {
 						image?
 							.resizable()
 							.scaledToFill()
-						Text("Tap to choose other picture")
-							.foregroundColor(.white)
-							.font(.headline)
-					} else {
-						Text("Tap to select a picture")
-							.foregroundColor(.white)
-							.font(.headline)
 					}
+					Text("Tap to select a picture")
+						.foregroundColor(.white)
+						.font(.headline)
 				}
 				.onTapGesture {
 					self.showingImagePicker = true
