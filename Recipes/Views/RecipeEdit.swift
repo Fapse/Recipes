@@ -60,6 +60,7 @@ struct RecipeEdit: View {
 					.bold()
 				TextEditor(text: $name)
 					.lineLimit(1)
+					.frame(minHeight: 40)
 				Text("Zutaten")
 					.bold()
 				TextEditor(text: $ingredients)

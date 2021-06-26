@@ -9,6 +9,9 @@ import SwiftUI
 
 struct RecipeDetail: View {
 	@State private var showingEdit: Bool = false
+	
+	@Environment(\.presentationMode) var presentationMode
+	
 	@ObservedObject var recipe: Recipe
     var body: some View {
 		ScrollView {
@@ -43,12 +46,17 @@ struct RecipeDetail: View {
 					}
 				}
 				.frame(maxWidth: .infinity, alignment: .leading)
-				Text("Erstellt: " + getDateString(date: recipe.created))
-					.font(.footnote)
-					.foregroundColor(.gray)
-					.italic()
-					.padding(.top)
-					.frame(alignment: .center)
+				if !recipe.name.isEmpty {
+					// App would sometimes crash in this Text, when last recipe is deleted.
+					// and recipe was just in detail view before.
+					// This is just a bad way to get around this possible bug.
+					Text("Erstellt: " + getDateString(date: recipe.created))
+						.font(.footnote)
+						.foregroundColor(.gray)
+						.italic()
+						.padding(.top)
+						.frame(alignment: .center)
+				}
 			}
 		}
 		.padding()
@@ -61,6 +69,9 @@ struct RecipeDetail: View {
 					Image(systemName: "pencil")
 				}
 			}
+		}
+		.onDisappear() {
+			presentationMode.wrappedValue.dismiss()
 		}
 	}
 	
