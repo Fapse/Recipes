@@ -10,8 +10,6 @@ import SwiftUI
 struct RecipeDetail: View {
 	@State private var showingEdit: Bool = false
 	
-	@Environment(\.presentationMode) var presentationMode
-	
 	@ObservedObject var recipe: Recipe
     var body: some View {
 		ScrollView {
@@ -69,9 +67,6 @@ struct RecipeDetail: View {
 					Image(systemName: "pencil")
 				}
 			}
-		}
-		.onDisappear() {
-			presentationMode.wrappedValue.dismiss()
 		}
 	}
 	
