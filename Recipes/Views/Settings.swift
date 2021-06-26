@@ -89,9 +89,9 @@ struct Settings: View {
 			var json = "["
 			for i in 0...recipes.count - 1 {
 				json.append("{")
-				json.append("\"name\":\"\(recipes[i].name)\",")
-				json.append("\"ingredients\":\"\(recipes[i].ingredients)\",")
-				json.append("\"instructions\":\"\(recipes[i].instructions)\",")
+				json.append("\"name\":\"\(reescapeLineBreaks(recipes[i].name))\",")
+				json.append("\"ingredients\":\"\(reescapeLineBreaks(recipes[i].ingredients))\",")
+				json.append("\"instructions\":\"\(reescapeLineBreaks(recipes[i].instructions))\",")
 				json.append("\"created\":\"\(recipes[i].created.timeIntervalSince1970)\"")
 				json.append("}")
 				if !(i == recipes.count - 1) {
@@ -101,6 +101,11 @@ struct Settings: View {
 			json.append("]")
 			writeToFile(json)
 		}
+	}
+	
+	func reescapeLineBreaks(_ text: String) -> String {
+		// Fix for possible bug with line breaks
+		return text.replacingOccurrences(of: "\n", with: "\\n")
 	}
     
     func deleteRecipeDatabase(){
