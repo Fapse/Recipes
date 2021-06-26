@@ -10,6 +10,7 @@ import SwiftUI
 struct RecipeEdit: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
 	@Environment(\.presentationMode) var presentationMode
+	@Environment(\.colorScheme) var colorScheme
 
 	@State private var showingImagePicker = false
 	@State private var inputImage: UIImage?
@@ -57,7 +58,8 @@ struct RecipeEdit: View {
 				}
 				Text("Rezeptname")
 					.bold()
-				TextField("Name", text: $name)
+				TextEditor(text: $name)
+					.lineLimit(1)
 				Text("Zutaten")
 					.bold()
 				TextEditor(text: $ingredients)
