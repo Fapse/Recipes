@@ -60,9 +60,18 @@ struct Settings: View {
 										recipe_temp.created = Date(timeIntervalSince1970: temp_date)
 									}
 								}
-								//if (inputImage != nil) {
-								//	recipe_temp.image = inputImage?.jpegData(compressionQuality: 1)
-								//}
+								if let temp_recipeImageName = recipe["imageFileName"] {
+									let data = readFromFile2(temp_recipeImageName)
+									if let imageData = data {
+										let uiImage = UIImage(data: imageData)
+										if uiImage == nil {
+											print("No image created")
+										}
+										if let temp_uiImage = uiImage {
+											recipe_temp.image = temp_uiImage.jpegData(compressionQuality: 1)
+										}
+									}
+								}
 								try? managedObjectContext.save()
 							}
 						}
@@ -92,6 +101,12 @@ struct Settings: View {
 				json.append("\"name\":\"\(reescapeLineBreaks(recipes[i].name))\",")
 				json.append("\"ingredients\":\"\(reescapeLineBreaks(recipes[i].ingredients))\",")
 				json.append("\"instructions\":\"\(reescapeLineBreaks(recipes[i].instructions))\",")
+				if recipes[i].image != nil {
+					let fileName = recipes[i].uuid.description + ".jpeg"
+					print(fileName)
+					writeToFile2(recipes[i].image!, fileName)
+					json.append("\"imageFileName\":\"\(fileName)\",")
+				}
 				json.append("\"created\":\"\(recipes[i].created.timeIntervalSince1970)\"")
 				json.append("}")
 				if !(i == recipes.count - 1) {
@@ -122,6 +137,15 @@ struct Settings: View {
 		}
 	}
 	
+	func writeToFile2(_ fileContent: Data, _ fileName: String) {
+		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent(fileName)
+		do {
+			try fileContent.write(to: path)
+		} catch {
+			print(error.localizedDescription)
+		}
+	}
+
 	func writeToFile(_ fileContent: String) {
 		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent("recipes.json")
 		do {
@@ -130,7 +154,19 @@ struct Settings: View {
 			print(error.localizedDescription)
 		}
 	}
-	
+
+	func readFromFile2(_ fileName: String) -> Data? {
+		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent(fileName)
+		var data: Data?
+		do {
+			data = try Data(contentsOf: path)
+		} catch {
+			print("Error reading from file")
+			print(error.localizedDescription)
+		}
+		return data
+	}
+
 	func readFromFile() -> Data? {
 		let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask) [0].appendingPathComponent("recipes.json")
 		var data: Data?
