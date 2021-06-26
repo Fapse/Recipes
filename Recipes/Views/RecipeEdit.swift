@@ -10,7 +10,6 @@ import SwiftUI
 struct RecipeEdit: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
 	@Environment(\.presentationMode) var presentationMode
-	@Environment(\.colorScheme) var colorScheme
 
 	@State private var showingImagePicker = false
 	@State private var inputImage: UIImage?
