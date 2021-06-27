@@ -23,23 +23,22 @@ struct RecipeList: View {
 	  
     var body: some View {
 		NavigationView {
-			ScrollView {
-				SearchBar(searchText: $searchText, isSearching: $isSearching)
+		Group {
+			SearchBar(searchText: $searchText, isSearching: $isSearching)
+			List {
 				ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
-					Group {
-					HStack {
 						NavigationLink(
 							destination: RecipeDetail(recipe: recipe)) {
 								RecipeRow(recipe: recipe)
 								.foregroundColor(Color.primary)
 							}
-					}
-					.padding(.leading)
-					Divider()
-						.background(Color(.systemGray4))
-						.padding(.leading)
-					}
 				}
+				.onDelete(
+					perform: deleteRecipes
+				)
+			}
+				.listStyle(PlainListStyle())
+			Spacer()
 			}
 			.navigationTitle("Rezepte")
 			.navigationBarTitleDisplayMode(.inline)
@@ -65,6 +64,7 @@ struct RecipeList: View {
 						.padding()
 					}
 			)
+		
 		}
 	}
 	
