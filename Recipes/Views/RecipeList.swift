@@ -94,6 +94,9 @@ struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
         RecipeList()
 			.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        RecipeList()
+			.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+			.colorScheme(.dark)
     }
 }
 
