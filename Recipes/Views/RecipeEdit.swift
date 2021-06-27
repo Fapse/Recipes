@@ -71,7 +71,7 @@ struct RecipeEdit: View {
 			}
 		}
 		.padding()
-		.background(Color.gray.opacity(0.2))
+		.background(Color(.systemGray2))
 		.navigationBarTitle(Text("Rezept bearbeiten"), displayMode: .inline)
 		.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
 			ImagePicker(image: self.$inputImage)
