@@ -7,13 +7,14 @@
 
 import SwiftUI
 import CoreData
+import Foundation
 
 struct RecipeList: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
 	@State private var showingNew = false
 	@State private var showingSettings = false
 	@State private var searchText = ""
-	@State var isSearching = false
+	@State private var isSearching = false
 
 	@FetchRequest(
 		entity: Recipe.entity(),
@@ -23,52 +24,8 @@ struct RecipeList: View {
     var body: some View {
 		NavigationView {
 			ScrollView {
-				HStack {
-					HStack {
-						TextField("Search term here", text: $searchText)
-							.padding(.leading, 24)
-					}
-					.padding(.horizontal)
-					.padding(.vertical, 6)
-					.background(Color(.systemGray4))
-					.cornerRadius(6)
-					.padding()
-					.onTapGesture(perform: {
-						isSearching = true
-					})
-					.overlay(
-						HStack {
-							Image(systemName: "magnifyingglass")
-							Spacer()
-							if isSearching {
-								Button(action: {searchText = ""}, label: {
-									Image(systemName: "xmark.circle.fill")
-										.padding(.vertical)
-								})
-							}
-						}
-						.padding(.horizontal, 32)
-						.foregroundColor(.gray)
-					)
-					.transition(.move(edge: .trailing))
-					.animation(.default)
-					if isSearching {
-						Button(action: {
-							isSearching = false
-							searchText = ""
-							UIApplication.shared.sendAction(#selector(UIResponder
-								.resignFirstResponder), to: nil, from: nil, for: nil)
-						}, label: {
-							Text("Cancel")
-								.padding(.trailing)
-								.padding(.leading, -5)
-								.padding(.vertical, 6)
-						})
-						.transition(.move(edge: .trailing))
-						.animation(.default)
-					}
-				}
-				ForEach(recipes.filter{ temp in containsText(serchText: searchText, recipe: temp) }  , id: \.uuid) { recipe in
+				SearchBar(searchText: $searchText, isSearching: $isSearching)
+				ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
 					Group {
 					HStack {
 						NavigationLink(
@@ -114,11 +71,11 @@ struct RecipeList: View {
 	func containsText(serchText: String, recipe: Recipe) -> Bool {
 		if searchText == "" {
 			return true
-		} else if recipe.name.lowercased().contains(serchText.lowercased()) {
+		} else if recipe.name.lowercased().contains(searchText.lowercased()) {
 			return true
 		} else if recipe.ingredients.lowercased().contains(searchText.lowercased()) {
 			return true
-		} else if recipe.instructions.lowercased().contains(serchText.lowercased()) {
+		} else if recipe.instructions.lowercased().contains(searchText.lowercased()) {
 			return true
 		} else {
 			return false
@@ -138,4 +95,58 @@ struct RecipeList_Previews: PreviewProvider {
         RecipeList()
 			.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
+}
+
+struct SearchBar: View {
+
+	@Binding var searchText: String
+	@Binding var isSearching: Bool
+	
+	var body: some View {
+		HStack {
+			HStack {
+				TextField("Search term here", text: $searchText)
+					.padding(.leading, 24)
+			}
+			.padding(.horizontal)
+			.padding(.vertical, 6)
+			.background(Color(.systemGray4))
+			.cornerRadius(6)
+			.padding()
+			.onTapGesture(perform: {
+				isSearching = true
+			})
+			.overlay(
+				HStack {
+					Image(systemName: "magnifyingglass")
+					Spacer()
+					if isSearching {
+						Button(action: {searchText = ""}, label: {
+							Image(systemName: "xmark.circle.fill")
+								.padding(.vertical)
+						})
+					}
+				}
+				.padding(.horizontal, 32)
+				.foregroundColor(.gray)
+			)
+			.transition(.move(edge: .trailing))
+			.animation(.default)
+			if isSearching {
+				Button(action: {
+					isSearching = false
+					searchText = ""
+					UIApplication.shared.sendAction(#selector(UIResponder
+						.resignFirstResponder), to: nil, from: nil, for: nil)
+				}, label: {
+					Text("Cancel")
+						.padding(.trailing)
+						.padding(.leading, -5)
+						.padding(.vertical, 6)
+				})
+				.transition(.move(edge: .trailing))
+				.animation(.default)
+			}
+		}
+	}
 }
