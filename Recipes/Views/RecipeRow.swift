@@ -10,11 +10,12 @@ import SwiftUI
 struct RecipeRow: View {
 	@ObservedObject var recipe: Recipe
     var body: some View {
-        VStack {
+        HStack {
 			Text(recipe.name)
 				.font(.headline)
 				.padding([.leading, .trailing], 5)
-		}		
+			Spacer()
+		}
     }
 }
 
