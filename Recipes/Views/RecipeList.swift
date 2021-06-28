@@ -25,6 +25,9 @@ struct RecipeList: View {
 		NavigationView {
 		Group {
 			SearchBar(searchText: $searchText, isSearching: $isSearching)
+			if recipes.count == 0 {
+				Text("Keine Rezepte gespeichert")
+			}
 			List {
 				ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
 						NavigationLink(
