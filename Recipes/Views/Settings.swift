@@ -30,7 +30,9 @@ struct Settings: View {
 					showingAlert = true
 				}
 				.alert(isPresented: $showingAlert) {
-					Alert(title: Text("Achtung"), message: Text("Alles Rezepte löschen?"), primaryButton: .default(Text("Abbrechen")), secondaryButton: .destructive(Text("Löschen"), action: deleteRecipeDatabase))
+					Alert(title: Text("Achtung"),
+						message: Text("Alle Rezepte löschen?"), primaryButton: .default(Text("Abbrechen")),
+						secondaryButton: .destructive(Text("Löschen"), action: deleteRecipeDatabase))
 				}
 				.disabled(recipes.count == 0)
 			}
