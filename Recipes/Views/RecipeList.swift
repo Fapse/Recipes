@@ -33,7 +33,6 @@ struct RecipeList: View {
 						NavigationLink(
 							destination: RecipeDetail(recipe: recipe)) {
 								RecipeRow(recipe: recipe)
-								.foregroundColor(Color.primary)
 							}
 				}
 				.onDelete(

@@ -12,8 +12,6 @@ struct RecipeRow: View {
     var body: some View {
         HStack {
 			Text(recipe.name)
-				//.font(.headline)
-				.padding([.leading, .trailing], 5)
 			Spacer()
 		}
     }
