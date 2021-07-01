@@ -7,7 +7,6 @@
 
 import SwiftUI
 import CoreData
-import Foundation
 
 struct RecipeList: View {
 	@Environment(\.managedObjectContext) var managedObjectContext
@@ -15,6 +14,8 @@ struct RecipeList: View {
 	@State private var showingSettings = false
 	@State private var searchText = ""
 	@State private var isSearching = false
+	@State private var listViewId = UUID()
+	@State private var selectedItem: Recipe?
 
 	@FetchRequest(
 		entity: Recipe.entity(),
@@ -30,43 +31,50 @@ struct RecipeList: View {
 			}
 			List {
 				ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
-						NavigationLink(
-							destination: RecipeDetail(recipe: recipe)) {
-								RecipeRow(recipe: recipe)
-							}
+					NavigationLink(destination: RecipeDetail(recipe: recipe),
+						tag: recipe,
+						selection: $selectedItem,
+						label: {Text(recipe.name)}
+					)
 				}
-				.onDelete(
-					perform: deleteRecipes
-				)
+				.onDelete(perform: deleteRecipes)
 			}
-				.listStyle(PlainListStyle())
+			.id(listViewId)
+			.onAppear {
+				// Workaround for bug(?), so selected recipe list entries will not show as selected, when returning from detail view
+				// See here: https://developer.apple.com/forums/thread/660468?answerId=657882022#657882022
+				if selectedItem != nil {
+					selectedItem = nil
+					listViewId = UUID()
+				}
+			}
+			.listStyle(PlainListStyle())
 			Spacer()
-			}
-			.navigationTitle("Rezepte")
-			.navigationBarTitleDisplayMode(.inline)
-			.navigationBarItems(
-				leading:
-					HStack {
-						NavigationLink(destination: Settings(), isActive: $showingSettings) {}
-						Button(action: {
-							showingSettings = true
-						}) {
-							Image(systemName: "gearshape")
-						}
-						.padding()
-					},
-				trailing:
-					HStack {
-						NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
-						Button(action: {
-							showingNew = true
-						}) {
-							Image(systemName: "note.text.badge.plus")
-						}
-						.padding()
+		}
+		.navigationTitle("Rezepte")
+		.navigationBarTitleDisplayMode(.inline)
+		.navigationBarItems(
+			leading:
+				HStack {
+					NavigationLink(destination: Settings(), isActive: $showingSettings) {}
+					Button(action: {
+						showingSettings = true
+					}) {
+						Image(systemName: "gearshape")
 					}
+					.padding()
+				},
+			trailing:
+				HStack {
+					NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
+					Button(action: {
+						showingNew = true
+					}) {
+						Image(systemName: "note.text.badge.plus")
+					}
+					.padding()
+				}
 			)
-		
 		}
 	}
 	
@@ -110,7 +118,7 @@ struct SearchBar: View {
 	var body: some View {
 		HStack {
 			HStack {
-				TextField("Search term here", text: $searchText)
+				TextField("Suchbegriff", text: $searchText)
 					.padding(.leading, 24)
 			}
 			.padding(.horizontal)
