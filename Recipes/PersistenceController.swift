@@ -61,6 +61,7 @@ var previewRecipe: Recipe = {
 	recipe.instructions = "Alles zusammenrühren. Danach in einer Pfanne erhitzen und mit reichlich Weißwein ablöschen.\nAnschließend verspeisen."
 	recipe.image = testData
 	recipe.created = Date()
+	recipe.edited = Date().addingTimeInterval(4000)
 	recipe.uuid = UUID()
 	return recipe
 }()

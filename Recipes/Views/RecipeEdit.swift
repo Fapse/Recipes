@@ -91,6 +91,7 @@ struct RecipeEdit: View {
 					recipe!.name = name
 					recipe!.ingredients = ingredients
 					recipe!.instructions = instructions
+					recipe!.edited = Date()
 					if (inputImage != nil) {
 						recipe!.image = inputImage?.jpegData(compressionQuality: 1)
 					}

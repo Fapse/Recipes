@@ -62,6 +62,11 @@ struct Settings: View {
 										recipe_temp.created = Date(timeIntervalSince1970: temp_date)
 									}
 								}
+								if let temp_edited = recipe["edited"] {
+									if let temp_date = Double(temp_edited) {
+										recipe_temp.edited = Date(timeIntervalSince1970: temp_date)
+									}
+								}
 								if let temp_recipeImageName = recipe["imageFileName"] {
 									let data = readFromFile(temp_recipeImageName)
 									if let imageData = data {
@@ -108,6 +113,9 @@ struct Settings: View {
 					print(fileName)
 					writeToFile(recipes[i].image!, fileName)
 					json.append("\"imageFileName\":\"\(fileName)\",")
+				}
+				if let edited = recipes[i].edited {
+					json.append("\"edited\":\"\(edited.timeIntervalSince1970)\",")
 				}
 				json.append("\"created\":\"\(recipes[i].created.timeIntervalSince1970)\"")
 				json.append("}")

@@ -47,13 +47,20 @@ struct RecipeDetail: View {
 				if !recipe.name.isEmpty {
 					// App would sometimes crash in this Text, when last recipe is deleted.
 					// and recipe was just in detail view before.
-					// This is just a bad way to get around this possible bug.
+					// This if-clause is just a bad way to get around this weird possible bug.
 					Text("Erstellt: " + getDateString(date: recipe.created))
 						.font(.footnote)
 						.foregroundColor(.gray)
 						.italic()
 						.padding(.top)
 						.frame(alignment: .center)
+					if let edited = recipe.edited {
+						Text("Aktualisiert: " + getDateString(date: edited))
+							.font(.footnote)
+							.foregroundColor(.gray)
+							.italic()
+							.frame(alignment: .center)
+					}
 				}
 			}
 		}
