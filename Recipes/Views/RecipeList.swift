@@ -27,7 +27,7 @@ struct RecipeList: View {
 		Group {
 			SearchBar(searchText: $searchText, isSearching: $isSearching)
 			if recipes.count == 0 {
-				Text("Keine Rezepte gespeichert")
+				Text("No recipes available")
 			}
 			List {
 				ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
@@ -51,7 +51,7 @@ struct RecipeList: View {
 			.listStyle(PlainListStyle())
 			Spacer()
 		}
-		.navigationTitle("Rezepte")
+		.navigationTitle(NSLocalizedString("Recipes", comment: "Recipes for cooking"))
 		.navigationBarTitleDisplayMode(.inline)
 		.navigationBarItems(
 			leading:
@@ -70,7 +70,7 @@ struct RecipeList: View {
 					Button(action: {
 						showingNew = true
 					}) {
-						Image(systemName: "note.text.badge.plus")
+						Image(systemName: "plus.circle.fill")
 					}
 					.padding()
 				}
@@ -118,7 +118,7 @@ struct SearchBar: View {
 	var body: some View {
 		HStack {
 			HStack {
-				TextField("Suchbegriff", text: $searchText)
+				TextField("Search term", text: $searchText)
 					.padding(.leading, 24)
 			}
 			.padding(.horizontal)

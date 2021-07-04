@@ -1,0 +1,61 @@
+/* No comment provided by engineer. */
+"Attention" = "Achtung";
+
+/* No comment provided by engineer. */
+"Cancel" = "Abbrechen";
+
+/* Time of recipe creation */
+"Created: " = "Erstellt: ";
+
+/* No comment provided by engineer. */
+"Delete" = "Löschen";
+
+/* Delete all recipes from database */
+"Delete All Recipes" = "Alle Rezepte löschen";
+
+/* No comment provided by engineer. */
+"Delete all recipes?" = "Alle Rezepte löschen?";
+
+/* No comment provided by engineer. */
+"Detail" = "Detail";
+
+/* No comment provided by engineer. */
+"Edit Recipe" = "Rezept bearbeiten";
+
+/* Time of last recipe edit */
+"Edited: " = "Geändert: ";
+
+/* Export recipes from json file */
+"Export Recipes To File" = "Rezepte in Datei exportieren";
+
+/* Import recipes from json file */
+"Import Recipes From File" = "Rezepte aus Datei importieren";
+
+/* What you need to cook this meal */
+"Ingredients" = "Zutaten";
+
+/* No comment provided by engineer. */
+"No recipes available" = "Keine Rezepte gespeichert";
+
+/* Import recipes from json file
+   Import recipes from json file\(recipes.count) */
+"Number of recipes: " = "Anzahl Rezepte: ";
+
+/* No comment provided by engineer. */
+"Number of recipes: %@" = "Anzahl Rezepte: %@";
+
+/* No comment provided by engineer. */
+"Preparation" = "Zubereitung";
+
+/* No comment provided by engineer. */
+"Recipe name" = "Rezeptname";
+
+/* Recipes for cooking */
+"Recipes" = "Rezepte";
+
+/* No comment provided by engineer. */
+"Search term" = "Suchbegriff";
+
+/* No comment provided by engineer. */
+"Tap to select a picture" = "Tippen für Bildauswahl";
+

@@ -55,16 +55,16 @@ struct RecipeEdit: View {
 				.onTapGesture {
 					self.showingImagePicker = true
 				}
-				Text("Rezeptname")
+				Text("Recipe name")
 					.bold()
 				TextEditor(text: $name)
 					.lineLimit(1)
 					.frame(minHeight: 40)
-				Text("Zutaten")
+				Text("Ingredients")
 					.bold()
 				TextEditor(text: $ingredients)
 					.frame(height: 120)
-				Text("Kochanleitung")
+				Text("Preparation")
 					.bold()
 				TextEditor(text: $instructions)
 					.frame(height: 120)
@@ -72,7 +72,7 @@ struct RecipeEdit: View {
 		}
 		.padding()
 		.background(Color(.systemGray2))
-		.navigationBarTitle(Text("Rezept bearbeiten"), displayMode: .inline)
+		.navigationBarTitle(Text("Edit Recipe"), displayMode: .inline)
 		.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
 			ImagePicker(image: self.$inputImage)
 		}

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipeDetail: View {
 	@State private var showingEdit: Bool = false
+	@Environment(\.locale) var locale: Locale
 	
 	@ObservedObject var recipe: Recipe
     var body: some View {
@@ -27,7 +28,7 @@ struct RecipeDetail: View {
 					.frame(maxWidth: .infinity, alignment: .center)
 				Group {
 					if !recipe.ingredients.isEmpty {
-						Text("Zutaten")
+						Text(NSLocalizedString("Ingredients", comment: "What you need to cook this meal"))
 							.font(.subheadline)
 							.fontWeight(.bold)
 							.padding(.top)
@@ -35,7 +36,7 @@ struct RecipeDetail: View {
 							.font(.system(size: 16))
 					}
 					if !recipe.instructions.isEmpty {
-						Text("Zubereitung")
+						Text(NSLocalizedString("Preparation", comment: "How to cook this meal"))
 							.font(.subheadline)
 							.fontWeight(.bold)
 							.padding(.top)
@@ -48,14 +49,14 @@ struct RecipeDetail: View {
 					// App would sometimes crash in this Text, when last recipe is deleted.
 					// and recipe was just in detail view before.
 					// This if-clause is just a bad way to get around this weird possible bug.
-					Text("Erstellt: " + getDateString(date: recipe.created))
+					Text(NSLocalizedString("Created: ", comment: "Time of recipe creation") + getDateString(date: recipe.created))
 						.font(.footnote)
 						.foregroundColor(.gray)
 						.italic()
 						.padding(.top)
 						.frame(alignment: .center)
 					if let edited = recipe.edited {
-						Text("Aktualisiert: " + getDateString(date: edited))
+						Text(NSLocalizedString("Edited: ", comment: "Time of last recipe edit") + getDateString(date: edited))
 							.font(.footnote)
 							.foregroundColor(.gray)
 							.italic()
@@ -81,7 +82,7 @@ struct RecipeDetail: View {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateStyle = .medium
 		dateFormatter.timeStyle = .short
-		dateFormatter.locale = Locale(identifier: "de_DE")
+		dateFormatter.locale = locale
 		return dateFormatter.string(from: date)
 	}
 }

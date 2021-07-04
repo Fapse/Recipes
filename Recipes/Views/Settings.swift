@@ -22,17 +22,17 @@ struct Settings: View {
     var body: some View {
 		VStack {
 			Group {
-				Text("Anzahl der Rezepte: \(recipes.count)")
-				Button("Load Recipes From File", action: loadRecipesFromFile)
-				Button("Export Recipes To File", action: exportRecipesToFile)
+				Text(NSLocalizedString("Number of recipes: ", comment: "Import recipes from json file") + "\(recipes.count)")
+				Button(NSLocalizedString("Import Recipes From File", comment: "Import recipes from json file"), action: loadRecipesFromFile)
+				Button(NSLocalizedString("Export Recipes To File", comment: "Export recipes from json file"), action: exportRecipesToFile)
 					.disabled(recipes.count == 0)
-				Button("Delete Recipe Database") {
+				Button(NSLocalizedString("Delete All Recipes", comment: "Delete all recipes from database")) {
 					showingAlert = true
 				}
 				.alert(isPresented: $showingAlert) {
-					Alert(title: Text("Achtung"),
-						message: Text("Alle Rezepte löschen?"), primaryButton: .default(Text("Abbrechen")),
-						secondaryButton: .destructive(Text("Löschen"), action: deleteRecipeDatabase))
+					Alert(title: Text("Attention"),
+						message: Text("Delete all recipes?"), primaryButton: .default(Text("Cancel")),
+						secondaryButton: .destructive(Text("Delete"), action: deleteRecipeDatabase))
 				}
 				.disabled(recipes.count == 0)
 			}
