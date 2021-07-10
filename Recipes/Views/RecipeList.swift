@@ -24,58 +24,57 @@ struct RecipeList: View {
 	  
     var body: some View {
 		NavigationView {
-		Group {
-			SearchBar(searchText: $searchText, isSearching: $isSearching)
-			if recipes.count == 0 {
-				Text("No recipes available")
-			}
-			List {
-				ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
-					NavigationLink(destination: RecipeDetail(recipe: recipe),
-						tag: recipe,
-						selection: $selectedItem,
-						//label: {Text(recipe.name)}
-						label: {RecipeRow(recipe: recipe)}
-					)
+			Group {
+				SearchBar(searchText: $searchText, isSearching: $isSearching)
+				if recipes.count == 0 {
+					Text("No recipes available")
 				}
-				.onDelete(perform: deleteRecipes)
-			}
-			.id(listViewId)
-			.onAppear {
-				// Workaround for bug(?), so selected recipe list entries will not show as selected, when returning from detail view
-				// See here: https://developer.apple.com/forums/thread/660468?answerId=657882022#657882022
-				if selectedItem != nil {
-					selectedItem = nil
-					listViewId = UUID()
-				}
-			}
-			.listStyle(PlainListStyle())
-			Spacer()
-		}
-		.navigationTitle(NSLocalizedString("Recipes", comment: "Recipes for cooking"))
-		.navigationBarTitleDisplayMode(.inline)
-		.navigationBarItems(
-			leading:
-				HStack {
-					NavigationLink(destination: Settings(), isActive: $showingSettings) {}
-					Button(action: {
-						showingSettings = true
-					}) {
-						Image(systemName: "gearshape")
+				List {
+					ForEach(recipes.filter{ recipe in containsText(serchText: searchText, recipe: recipe) }  , id: \.uuid) { recipe in
+						NavigationLink(destination: RecipeDetail(recipe: recipe),
+							tag: recipe,
+							selection: $selectedItem,
+							label: {RecipeRow(recipe: recipe)}
+						)
 					}
-					.padding()
-				},
-			trailing:
-				HStack {
-					NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
-					Button(action: {
-						showingNew = true
-					}) {
-						Image(systemName: "plus.circle.fill")
-					}
-					.padding()
+					.onDelete(perform: deleteRecipes)
 				}
-			)
+				.id(listViewId)
+				.onAppear {
+					// Workaround for bug(?), so selected recipe list entries will not show as selected, when returning from detail view
+					// See here: https://developer.apple.com/forums/thread/660468?answerId=657882022#657882022
+					if selectedItem != nil {
+						selectedItem = nil
+						listViewId = UUID()
+					}
+				}
+				.listStyle(PlainListStyle())
+				Spacer()
+			}
+			.navigationTitle(NSLocalizedString("Recipes", comment: "Recipes for cooking"))
+			.navigationBarTitleDisplayMode(.inline)
+			.navigationBarItems(
+				leading:
+					HStack {
+						NavigationLink(destination: Settings(), isActive: $showingSettings) {}
+						Button(action: {
+							showingSettings = true
+						}) {
+							Image(systemName: "gearshape")
+						}
+						.padding()
+					},
+				trailing:
+					HStack {
+						NavigationLink(destination: RecipeEdit(), isActive: $showingNew) {}
+						Button(action: {
+							showingNew = true
+						}) {
+							Image(systemName: "plus.circle.fill")
+						}
+						.padding()
+					}
+				)
 		}
 	}
 	
