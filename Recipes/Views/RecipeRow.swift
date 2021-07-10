@@ -19,12 +19,12 @@ struct RecipeRow: View {
 				}
 				.frame(maxHeight: 50)
 				.frame(maxWidth: 50)
-				.padding(.trailing)
+				.padding(.trailing, 5)
 			} else {
 				HStack{}
 					.frame(maxHeight: 50)
 					.frame(maxWidth: 50)
-					.padding(.trailing)
+					.padding(.trailing, 5)
 			}
 			Text(recipe.name)
 			Spacer()
