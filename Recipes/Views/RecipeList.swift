@@ -34,7 +34,8 @@ struct RecipeList: View {
 					NavigationLink(destination: RecipeDetail(recipe: recipe),
 						tag: recipe,
 						selection: $selectedItem,
-						label: {Text(recipe.name)}
+						//label: {Text(recipe.name)}
+						label: {RecipeRow(recipe: recipe)}
 					)
 				}
 				.onDelete(perform: deleteRecipes)

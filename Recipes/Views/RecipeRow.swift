@@ -11,6 +11,21 @@ struct RecipeRow: View {
 	@ObservedObject var recipe: Recipe
     var body: some View {
         HStack {
+			if (recipe.image != nil) {
+				HStack {
+				Image(uiImage: UIImage(data: recipe.image!)!)
+					.resizable()
+					.aspectRatio(contentMode: .fit)
+				}
+				.frame(maxHeight: 50)
+				.frame(maxWidth: 50)
+				.padding(.trailing)
+			} else {
+				HStack{}
+					.frame(maxHeight: 50)
+					.frame(maxWidth: 50)
+					.padding(.trailing)
+			}
 			Text(recipe.name)
 			Spacer()
 		}
