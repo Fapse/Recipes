@@ -55,6 +55,11 @@ struct Settings: View {
 							if !recipeNameExists(recipe_name) {
 								let recipe_temp = Recipe(context: managedObjectContext)
 								recipe_temp.name = recipe_name
+								if let uuid_string = recipe["uuid"] {
+									if let temp_uuid = UUID(uuidString: uuid_string) {
+										recipe_temp.uuid = temp_uuid
+									}
+								}
 								recipe_temp.ingredients = recipe["ingredients"] ?? ""
 								recipe_temp.instructions = recipe["instructions"] ?? ""
 								if let temp_created = recipe["created"] {
@@ -106,6 +111,7 @@ struct Settings: View {
 			for i in 0...recipes.count - 1 {
 				json.append("{")
 				json.append("\"name\":\"\(reescapeLineBreaks(recipes[i].name))\",")
+				json.append("\"uuid\":\"\(recipes[i].uuid.uuidString)\",")
 				json.append("\"ingredients\":\"\(reescapeLineBreaks(recipes[i].ingredients))\",")
 				json.append("\"instructions\":\"\(reescapeLineBreaks(recipes[i].instructions))\",")
 				if recipes[i].image != nil {
