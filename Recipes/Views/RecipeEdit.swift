@@ -84,7 +84,7 @@ struct RecipeEdit: View {
 					recipe_temp.ingredients = ingredients
 					recipe_temp.instructions = instructions
 					if (inputImage != nil) {
-						recipe_temp.image = inputImage?.jpegData(compressionQuality: 1)
+						recipe_temp.image = inputImage?.jpegData(compressionQuality: 0.3)
 					}
 					try? managedObjectContext.save()
 				} else {
@@ -93,7 +93,7 @@ struct RecipeEdit: View {
 					recipe!.instructions = instructions
 					recipe!.edited = Date()
 					if (inputImage != nil) {
-						recipe!.image = inputImage?.jpegData(compressionQuality: 1)
+						recipe!.image = inputImage?.jpegData(compressionQuality: 0.3)
 					}
 					try? managedObjectContext.save()
 				}
