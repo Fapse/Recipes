@@ -100,6 +100,15 @@ struct RecipeList: View {
 	}
 }
 
+extension UINavigationController {
+	override open func viewDidLoad() {
+		super.viewDidLoad()
+		let standardAppearence = UINavigationBarAppearance()
+		standardAppearence.backgroundColor = .orange
+		navigationBar.standardAppearance = standardAppearence
+	}
+}
+
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
         RecipeList()
